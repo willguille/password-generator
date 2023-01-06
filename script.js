@@ -88,6 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+
 // Function to prompt user for password options
 function getPasswordOptions() {
   // Prompt the user for password length
@@ -95,7 +96,7 @@ function getPasswordOptions() {
 
   // Validate password length
   while (passwordLength < 10 || passwordLength > 64) {
-    alert("Error: Password length must be between 10 and 64 characters. Please try again")
+    alert("Error: Password length must be between 10 and 64 characters. Please try again");
     passwordLength = prompt("Enter the desired password length (must be between 10 and 64 characters):");
   }
 
@@ -113,16 +114,18 @@ function getPasswordOptions() {
     numeric = confirm("Include numeric characters in the password?");
     special = confirm("Include special characters in the password?");
   }
-  
 }
 
 // Function for getting a random element from an array
 function getRandom(arr) {
+  var index = Math.floor(Math.random() * arr.length);
+  return arr[index];
 
 }
 
 // Function to generate password with user input
-function generatePassword() {
+function generatePassword(passwordLength, lowercase, uppercase, numeric, special) {
+  getPasswordOptions();
   // Create an array, selectedCharCodes, that will be used to generate password
   var selectedCharCodes = [];
   if (lowercase) {
@@ -137,7 +140,19 @@ function generatePassword() {
   if (special) {
     selectedCharCodes = selectedCharCodes.concat(special);
   }
-
+  // Create a new empty string that will be used to build the password
+  var password = "";
+  
+  // Use a for loop to iterate over the password length
+  for (var i = 0; i < passwordLength; i++) {
+    // Get a random character from the selectedCharCodes array
+    var randomChar = getRandom(selectedCharCodes);
+    
+    // Add the random character to the password string
+    password += randomChar;
+  }
+  // Return the generated password
+  return password;
 }
 
 // Get references to the #generate element
